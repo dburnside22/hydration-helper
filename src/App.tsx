@@ -53,15 +53,18 @@ END:VCALENDAR`;
 
 function WaterGlass({ fillPercentage }: { fillPercentage: number }) {
   return (
-    <div className="relative w-24 h-32 border-4 border-blue-500 rounded-b-3xl mx-auto mt-4">
+    <div className="relative w-24 h-32 border-4 border-blue-500 rounded-b-3xl mx-auto mt-4 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-4 bg-white border-b-4 border-blue-500 rounded-t-lg" />
       <div 
-        className="absolute bottom-0 left-0 right-0 bg-blue-400 transition-all duration-500 ease-in-out rounded-b-3xl"
+        className="absolute bottom-0 left-0 right-0 bg-blue-500 opacity-50 rounded-b-3xl animate"
         style={{ height: `${fillPercentage}%` }}
       />
-      <div className="absolute top-0 left-0 right-0 h-4 bg-white border-b-4 border-blue-500 rounded-t-lg" />
     </div>
   );
 }
+
+// Add the slosh animation to your CSS
+// You can add this in your CSS file or in a <style> tag in your component
 
 function App() {
   const [userInfo, setUserInfo] = useState<UserInfo>({
@@ -170,7 +173,7 @@ function App() {
             <Droplet className="text-blue-500" size={32} />
             <p className="text-4xl font-bold text-blue-600">{waterIntake} Liters</p>
           </div>
-          <WaterGlass fillPercentage={Math.min(100, (waterIntake / 4) * 100)} />
+            <WaterGlass fillPercentage={Math.min(100, (waterIntake / (userInfo.weight * 0.02)) * 100)} />
           <p className="mt-4 text-gray-600">Spread your intake throughout the day!</p>
           <a
             href={generateCalendarEvent(waterIntake)}
